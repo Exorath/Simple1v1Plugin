@@ -17,6 +17,7 @@
 package com.exorath.plugin.simple1v1.core.map;
 
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -40,4 +41,15 @@ public class Map {
             configuration = YamlConfiguration.loadConfiguration(configFile);
     }
 
+    public String getMapName() {
+        return mapName;
+    }
+
+    public FileConfiguration getConfiguration() {
+        return configuration;
+    }
+
+    public World getWorld(){
+        return Bukkit.getWorld(mapName);
+    }
 }

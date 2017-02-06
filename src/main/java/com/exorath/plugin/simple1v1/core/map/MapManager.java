@@ -17,9 +17,12 @@
 package com.exorath.plugin.simple1v1.core.map;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
@@ -30,10 +33,10 @@ public class MapManager {
     private Map gameMap;
 
     public MapManager() {
-        selectGameMap();
+        selectMap();
     }
 
-    private void selectGameMap(){
+    private void selectMap(){
         File mapContainer = Bukkit.getWorldContainer();
         List<String> mapNames = new ArrayList<>();
         for (File mapDir : mapContainer.listFiles((dir, name) -> new File(dir, name).isDirectory())) {
@@ -44,5 +47,23 @@ public class MapManager {
         }
         String randomMapName = mapNames.get(new Random().nextInt(mapNames.size()));
         gameMap = new Map(randomMapName);
+        if(gameMap.getConfiguration() == null){
+            System.out.println("The map " + gameMap.getMapName() + " is not configured. Please add an exorath.yml Shutting down!");
+            Bukkit.shutdown();
+        }
+    }
+
+
+    public Location getLobbySpawn(){
+        FileConfiguration configuration = gameMap.getConfiguration();
+        if(!configuration.contains("lobbyspawn.x") || !configuration.contains("lobbyspawn.y") || !configuration.contains("lobbyspawn.z")) {
+            System.out.println("Map " + gameMap.getMapName() + " lobby spawn not configured. Shutting down.");
+            Bukkit.shutdown();
+        }
+        return new Location(gameMap.getWorld(), configuration.getDouble("lobbyspawn.x"), configuration.getDouble("lobbyspawn.y"), configuration.getDouble("lobbyspawn.z"));
+    }
+
+    public Collection<Location> getSpawns(){
+        return new ArrayList<>();
     }
 }
