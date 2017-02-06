@@ -29,6 +29,8 @@ public class StateManager {
     }
 
     public void setState(State state) {
+        if(this.state == state)
+            return;
         State oldState = state;
         this.state = state;
         StateChangeEvent stateChangeEvent = new StateChangeEvent(oldState, state);

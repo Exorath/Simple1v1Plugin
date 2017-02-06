@@ -23,14 +23,20 @@ import org.bukkit.plugin.java.JavaPlugin;
  * Created by toonsev on 2/4/2017.
  */
 public class Main extends JavaPlugin {
+    private static Main instance;
     private static StateManager stateManager;
     @Override
     public void onEnable() {
-        this.stateManager = new StateManager();
+        Main.instance = this;
+        Main.stateManager = new StateManager();
 
     }
 
     public static StateManager getStateManager() {
         return stateManager;
+    }
+
+    public static Main getInstance() {
+        return instance;
     }
 }

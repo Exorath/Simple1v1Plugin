@@ -14,8 +14,9 @@
  *    limitations under the License.
  */
 
-package com.exorath.plugin.simple1v1.core;
+package com.exorath.plugin.simple1v1.core.start;
 
+import com.exorath.plugin.simple1v1.core.Main;
 import com.exorath.plugin.simple1v1.core.state.State;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
