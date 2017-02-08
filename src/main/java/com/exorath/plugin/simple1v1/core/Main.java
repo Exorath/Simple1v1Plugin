@@ -16,6 +16,7 @@
 
 package com.exorath.plugin.simple1v1.core;
 
+import com.exorath.plugin.simple1v1.core.map.MapManager;
 import com.exorath.plugin.simple1v1.core.state.StateManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -25,15 +26,21 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Main extends JavaPlugin {
     private static Main instance;
     private static StateManager stateManager;
+    private static MapManager mapManager;
+
     @Override
     public void onEnable() {
         Main.instance = this;
         Main.stateManager = new StateManager();
-
+        Main.mapManager = new MapManager();
     }
 
     public static StateManager getStateManager() {
         return stateManager;
+    }
+
+    public static MapManager getMapManager() {
+        return mapManager;
     }
 
     public static Main getInstance() {

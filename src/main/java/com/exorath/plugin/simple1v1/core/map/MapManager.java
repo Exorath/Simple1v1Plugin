@@ -22,7 +22,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
@@ -63,7 +62,7 @@ public class MapManager {
         return new Location(gameMap.getWorld(), configuration.getDouble("lobbyspawn.x"), configuration.getDouble("lobbyspawn.y"), configuration.getDouble("lobbyspawn.z"));
     }
 
-    public Collection<Location> getSpawns(){
+    public List<Location> getSpawns(){
         return new ArrayList<>();
     }
 }
