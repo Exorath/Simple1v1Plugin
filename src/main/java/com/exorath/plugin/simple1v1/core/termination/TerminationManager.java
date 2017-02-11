@@ -55,7 +55,7 @@ public class TerminationManager implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onStateChange(StateChangeEvent event) {
         if (event.getNewState().equals(State.STOPPING))
-            terminate();
+            Main.terminate();
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -75,7 +75,7 @@ public class TerminationManager implements Listener {
 
     @EventHandler
     public void onKill(PlayerDeathEvent event) {
-        Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> terminate(), 60l);
+        Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> Main.terminate(), 60l);
         event.getEntity().sendMessage(ChatColor.RED  + "You died and lost the game.");
         Player lastDamager = lastDamagerByPlayer.get(event.getEntity());
         if(lastDamager == null)
@@ -84,10 +84,4 @@ public class TerminationManager implements Listener {
         Bukkit.broadcastMessage("Game is terminating.");
     }
 
-    private void terminate() {
-        System.out.println("1v1Plugin is terminating...");
-        Bukkit.shutdown();
-        System.out.println("Termination failed, force exiting system...");
-        System.exit(0);
-    }
 }

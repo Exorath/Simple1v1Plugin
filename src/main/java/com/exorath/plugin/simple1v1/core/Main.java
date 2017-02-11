@@ -17,7 +17,13 @@
 package com.exorath.plugin.simple1v1.core;
 
 import com.exorath.plugin.simple1v1.core.map.MapManager;
+import com.exorath.plugin.simple1v1.core.message.MessageManager;
+import com.exorath.plugin.simple1v1.core.protection.ProtectionManager;
+import com.exorath.plugin.simple1v1.core.start.StartManager;
 import com.exorath.plugin.simple1v1.core.state.StateManager;
+import com.exorath.plugin.simple1v1.core.teleport.TeleportManager;
+import com.exorath.plugin.simple1v1.core.termination.TerminationManager;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -27,12 +33,34 @@ public class Main extends JavaPlugin {
     private static Main instance;
     private static StateManager stateManager;
     private static MapManager mapManager;
-
+    private static MessageManager messageManager;
+    private static ProtectionManager protectionManager;
+    private static StartManager startManager;
+    private static TeleportManager teleportManager;
+    private static TerminationManager terminationManager;
     @Override
     public void onEnable() {
-        Main.instance = this;
-        Main.stateManager = new StateManager();
-        Main.mapManager = new MapManager();
+        try {
+            Main.instance = this;
+            Main.stateManager = new StateManager();
+            Main.mapManager = new MapManager();
+            Main.messageManager = new MessageManager();
+            Main.protectionManager = new ProtectionManager();
+            Main.startManager = new StartManager();
+            Main.teleportManager = new TeleportManager();
+            Main.terminationManager = new TerminationManager();
+        }catch(Exception e){
+            e.printStackTrace();
+            terminate();
+        }
+
+    }
+
+    public static void terminate(){
+        System.out.println("1v1Plugin is terminating...");
+        Bukkit.shutdown();
+        System.out.println("Termination failed, force exiting system...");
+        System.exit(0);
     }
 
     public static StateManager getStateManager() {
