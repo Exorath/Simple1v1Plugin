@@ -18,9 +18,11 @@ package com.exorath.plugin.simple1v1.core.start;
 
 import com.exorath.plugin.simple1v1.core.Main;
 import com.exorath.plugin.simple1v1.core.state.State;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -34,10 +36,18 @@ public class StartManager implements Listener {
     }
 
     @EventHandler
+    public void onPreJoin(AsyncPlayerPreLoginEvent event) {
+        if (Bukkit.getOnlinePlayers().size() > 2)
+            event.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_FULL);
+        event.setKickMessage(ChatColor.RED + "Game is full.");
+    }
+
+    @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         if (Bukkit.getOnlinePlayers().size() > 2)
             event.getPlayer().kickPlayer("Too many players on server.");
-        checkCountdown();
+        else
+            checkCountdown();
     }
 
     @EventHandler
@@ -61,16 +71,16 @@ public class StartManager implements Listener {
 
         @Override
         public void run() {
-            if(Main.getStateManager().getState() != State.COUNTING_DOWN){
+            if (Main.getStateManager().getState() != State.COUNTING_DOWN) {
                 Bukkit.getOnlinePlayers().forEach(p -> p.sendMessage("countdown cancelled."));
                 cancel();
                 return;
             }
-            if(num == 0) {
+            if (num == 0) {
                 Bukkit.getOnlinePlayers().forEach(p -> p.sendMessage("Starting now..."));
                 Main.getStateManager().setState(State.STARTED);
                 cancel();
-            }else
+            } else
                 Bukkit.getOnlinePlayers().forEach(p -> p.sendMessage("Starting in " + num + " seconds."));
             num--;
         }
