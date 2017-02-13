@@ -16,6 +16,7 @@
 
 package com.exorath.plugin.simple1v1.core;
 
+import com.exorath.plugin.simple1v1.core.baseplugin.BasePluginManager;
 import com.exorath.plugin.simple1v1.core.map.MapManager;
 import com.exorath.plugin.simple1v1.core.message.MessageManager;
 import com.exorath.plugin.simple1v1.core.protection.ProtectionManager;
@@ -24,51 +25,61 @@ import com.exorath.plugin.simple1v1.core.state.StateManager;
 import com.exorath.plugin.simple1v1.core.teleport.TeleportManager;
 import com.exorath.plugin.simple1v1.core.termination.TerminationManager;
 import org.bukkit.Bukkit;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.HashMap;
 
 /**
  * Created by toonsev on 2/4/2017.
  */
 public class Main extends JavaPlugin {
     private static Main instance;
-    private static StateManager stateManager;
-    private static MapManager mapManager;
-    private static MessageManager messageManager;
-    private static ProtectionManager protectionManager;
-    private static StartManager startManager;
-    private static TeleportManager teleportManager;
-    private static TerminationManager terminationManager;
+
+    private static HashMap<Class, Object> managers;
+
     @Override
     public void onEnable() {
         try {
             Main.instance = this;
-            Main.stateManager = new StateManager();
-            Main.mapManager = new MapManager();
-            Main.messageManager = new MessageManager();
-            Main.protectionManager = new ProtectionManager();
-            Main.startManager = new StartManager();
-            Main.teleportManager = new TeleportManager();
-            Main.terminationManager = new TerminationManager();
-        }catch(Exception e){
+            addManager(new StateManager());
+            addManager(new MapManager());
+            addManager(new MessageManager());
+            addManager(new ProtectionManager());
+            addManager(new StartManager());
+            addManager(new TeleportManager());
+            addManager(new TerminationManager());
+            addManager(new BasePluginManager());
+        } catch (Exception e) {
             e.printStackTrace();
             terminate();
         }
 
     }
 
-    public static void terminate(){
+    public static void addManager(Object manager) {
+        if (manager instanceof Listener)
+            Bukkit.getPluginManager().registerEvents((Listener) manager, Main.getInstance());
+        managers.put(manager.getClass(), manager);
+    }
+
+    public static void terminate() {
         System.out.println("1v1Plugin is terminating...");
         Bukkit.shutdown();
         System.out.println("Termination failed, force exiting system...");
         System.exit(0);
     }
 
+    public static <T> T getManager(Class<T> clazz) {
+        return (T) managers.get(clazz);
+    }
+
     public static StateManager getStateManager() {
-        return stateManager;
+        return getManager(StateManager.class);
     }
 
     public static MapManager getMapManager() {
-        return mapManager;
+        return getManager(MapManager.class);
     }
 
     public static Main getInstance() {

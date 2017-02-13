@@ -1,3 +1,4 @@
 name: Simple1v1
 version: 0.0.1
 main: com.exorath.plugin.simple1v1.core.Main
+depend: [ExoBase]

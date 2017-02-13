@@ -16,8 +16,10 @@
 
 package com.exorath.plugin.simple1v1.core.map;
 
+import com.exorath.plugin.simple1v1.core.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
@@ -54,15 +56,25 @@ public class MapManager {
 
 
     public Location getLobbySpawn(){
-        FileConfiguration configuration = gameMap.getConfiguration();
-        if(!configuration.contains("lobbyspawn.x") || !configuration.contains("lobbyspawn.y") || !configuration.contains("lobbyspawn.z")) {
-            System.out.println("Map " + gameMap.getMapName() + " lobby spawn not configured. Shutting down.");
-            Bukkit.shutdown();
-        }
-        return new Location(gameMap.getWorld(), configuration.getDouble("lobbyspawn.x"), configuration.getDouble("lobbyspawn.y"), configuration.getDouble("lobbyspawn.z"));
+        ConfigurationSection configuration = gameMap.getConfiguration().getConfigurationSection("lobbyspawn");
+        return getLocation(configuration);
     }
 
     public List<Location> getSpawns(){
+        List<Location> spawns = new ArrayList<>();
+        ConfigurationSection configuration = gameMap.getConfiguration().getConfigurationSection("spawns");
+        for(String spawnKey : configuration.getKeys(false)){
+            ConfigurationSection spawnSection = configuration.getConfigurationSection(spawnKey);
+            spawns.add(getLocation(spawnSection));
+        }
         return new ArrayList<>();
+    }
+
+    public Location getLocation(ConfigurationSection section){
+        if(section == null || !section.contains("x") || !section.contains("y") || !section.contains("z")) {
+            System.out.println("Map " + gameMap.getMapName() + " lobby spawn not configured. Shutting down.");
+            Main.terminate();
+        }
+        return new Location(gameMap.getWorld(), section.getDouble("x"), section.getDouble("y"), section.getDouble("z"));
     }
 }
