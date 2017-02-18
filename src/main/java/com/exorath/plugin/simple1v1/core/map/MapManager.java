@@ -41,10 +41,14 @@ public class MapManager {
         File mapContainer = Bukkit.getWorldContainer();
         List<String> mapNames = new ArrayList<>();
         for (File mapDir : mapContainer.listFiles((dir, name) -> new File(dir, name).isDirectory())) {
-            File levelDat = new File(mapDir, "level.dat");
-            if(!levelDat.isFile())
+            File exoDat = new File(mapDir, "exorath.yml");
+            if(!exoDat.isFile())
                 continue;
             mapNames.add(mapDir.getName());
+        }
+        if(mapNames.size() == 0){
+            System.out.println("No maps found, add a map with an exorath.yml");
+            Main.terminate();
         }
         String randomMapName = mapNames.get(new Random().nextInt(mapNames.size()));
         gameMap = new Map(randomMapName);
