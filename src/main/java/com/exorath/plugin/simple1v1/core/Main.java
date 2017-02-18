@@ -36,7 +36,7 @@ import java.util.HashMap;
 public class Main extends JavaPlugin {
     private static Main instance;
 
-    private static HashMap<Class, Object> managers;
+    private static HashMap<Class, Object> managers = new HashMap<>();
 
     @Override
     public void onEnable() {
