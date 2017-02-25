@@ -28,20 +28,23 @@ public class MonitorManager {
         new Lag().runTaskTimer(Main.getInstance(), 20, 1);
 
         new Thread(() -> {
-            Runtime runtime = Runtime.getRuntime();
-            NumberFormat format = NumberFormat.getInstance();
-            StringBuilder sb = new StringBuilder();
-            long maxMemory = runtime.maxMemory();
-            long allocatedMemory = runtime.totalMemory();
-            long freeMemory = runtime.freeMemory();
-            sb.append("free memory: " + format.format(freeMemory / 1024) + "<br/>");
-            sb.append("allocated memory: " + format.format(allocatedMemory / 1024) + "<br/>");
-            sb.append("max memory: " + format.format(maxMemory / 1024) + "<br/>");
-            sb.append("total free memory: " + format.format((freeMemory + (maxMemory - allocatedMemory)) / 1024) + "<br/>");
-            try {
-                Thread.sleep(1000l);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            while(true) {
+                Runtime runtime = Runtime.getRuntime();
+                NumberFormat format = NumberFormat.getInstance();
+                StringBuilder sb = new StringBuilder();
+                long maxMemory = runtime.maxMemory();
+                long allocatedMemory = runtime.totalMemory();
+                long freeMemory = runtime.freeMemory();
+                sb.append("free memory: " + format.format(freeMemory / 1024) + "<br/>");
+                sb.append("allocated memory: " + format.format(allocatedMemory / 1024) + "<br/>");
+                sb.append("max memory: " + format.format(maxMemory / 1024) + "<br/>");
+                sb.append("total free memory: " + format.format((freeMemory + (maxMemory - allocatedMemory)) / 1024) + "<br/>");
+                System.out.println(sb.toString());
+                try {
+                    Thread.sleep(1000l);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }).start();
     }
