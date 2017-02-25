@@ -18,6 +18,7 @@ package com.exorath.plugin.simple1v1.core.start;
 
 import com.exorath.plugin.simple1v1.core.Main;
 import com.exorath.plugin.simple1v1.core.state.State;
+import com.exorath.plugin.simple1v1.core.state.StateChangeEvent;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
@@ -49,12 +50,17 @@ public class StartManager implements Listener {
         else
             checkCountdown();
     }
-
     @EventHandler
     public void onLeave(PlayerQuitEvent event) {
         checkCountdown();
     }
 
+    @EventHandler
+    public void onStateChange(StateChangeEvent event){
+        if(event.getNewState() == State.COUNTING_DOWN){
+            new CountdownTask().runTaskTimer(Main.getInstance(), 0, 20);
+        }
+    }
     private void checkCountdown() {
         boolean canStart = Bukkit.getOnlinePlayers().size() == 2;
         if (canStart) {
