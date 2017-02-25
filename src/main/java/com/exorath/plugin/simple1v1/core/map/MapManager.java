@@ -71,7 +71,7 @@ public class MapManager {
             ConfigurationSection spawnSection = configuration.getConfigurationSection(spawnKey);
             spawns.add(getLocation(spawnSection));
         }
-        return new ArrayList<>();
+        return spawns;
     }
 
     public Location getLocation(ConfigurationSection section){
