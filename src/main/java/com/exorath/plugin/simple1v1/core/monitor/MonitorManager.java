@@ -14,26 +14,15 @@
  *    limitations under the License.
  */
 
-package com.exorath.plugin.simple1v1.core.visibility;
+package com.exorath.plugin.simple1v1.core.monitor;
 
 import com.exorath.plugin.simple1v1.core.Main;
-import org.bukkit.Bukkit;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.scheduler.BukkitRunnable;
 
 /**
  * Created by toonsev on 2/25/2017.
  */
-public class VisibilityManager implements Listener {
-    @EventHandler
-    public void onJoin(PlayerJoinEvent event){
-        new BukkitRunnable(){
-            @Override
-            public void run() {
-                Bukkit.getOnlinePlayers().forEach(p -> Main.refreshVisibility(p));
-            }
-        }.runTaskLater(Main.getInstance(), 40l);
+public class MonitorManager {
+    public void MonitorManager(){
+        new Lag().runTaskTimer(Main.getInstance(), 20, 1);
     }
 }
