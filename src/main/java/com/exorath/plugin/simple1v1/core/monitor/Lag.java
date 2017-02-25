@@ -18,8 +18,6 @@ package com.exorath.plugin.simple1v1.core.monitor;
 
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.text.NumberFormat;
-
 /**
  * Created by toonsev on 2/25/2017.
  */
@@ -61,16 +59,7 @@ public class Lag extends BukkitRunnable {
         TICK_COUNT+= 1;
         if(TICK_COUNT % 20 == 0) {
             System.out.println("Last s: " + getTPS(20) + " Last 15s: " + getTPS(20 * 15) + " Last min: " + getTPS(20 * 60));
-            Runtime runtime = Runtime.getRuntime();
-            NumberFormat format = NumberFormat.getInstance();
-            StringBuilder sb = new StringBuilder();
-            long maxMemory = runtime.maxMemory();
-            long allocatedMemory = runtime.totalMemory();
-            long freeMemory = runtime.freeMemory();
-            sb.append("free memory: " + format.format(freeMemory / 1024) + "<br/>");
-            sb.append("allocated memory: " + format.format(allocatedMemory / 1024) + "<br/>");
-            sb.append("max memory: " + format.format(maxMemory / 1024) + "<br/>");
-            sb.append("total free memory: " + format.format((freeMemory + (maxMemory - allocatedMemory)) / 1024) + "<br/>");
+
         }
     }
 }

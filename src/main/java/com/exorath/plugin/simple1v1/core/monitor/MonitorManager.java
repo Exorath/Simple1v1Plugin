@@ -18,11 +18,31 @@ package com.exorath.plugin.simple1v1.core.monitor;
 
 import com.exorath.plugin.simple1v1.core.Main;
 
+import java.text.NumberFormat;
+
 /**
  * Created by toonsev on 2/25/2017.
  */
 public class MonitorManager {
     public void MonitorManager(){
         new Lag().runTaskTimer(Main.getInstance(), 20, 1);
+
+        new Thread(() -> {
+            Runtime runtime = Runtime.getRuntime();
+            NumberFormat format = NumberFormat.getInstance();
+            StringBuilder sb = new StringBuilder();
+            long maxMemory = runtime.maxMemory();
+            long allocatedMemory = runtime.totalMemory();
+            long freeMemory = runtime.freeMemory();
+            sb.append("free memory: " + format.format(freeMemory / 1024) + "<br/>");
+            sb.append("allocated memory: " + format.format(allocatedMemory / 1024) + "<br/>");
+            sb.append("max memory: " + format.format(maxMemory / 1024) + "<br/>");
+            sb.append("total free memory: " + format.format((freeMemory + (maxMemory - allocatedMemory)) / 1024) + "<br/>");
+            try {
+                Thread.sleep(1000l);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 }

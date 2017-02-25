@@ -25,6 +25,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.net.UnknownHostException;
+import java.text.NumberFormat;
 
 /**
  * Created by toonsev on 2/11/2017.
@@ -40,6 +41,7 @@ public class BasePluginManager implements Listener{
             e.printStackTrace();
             Main.terminate();
         }
+
     }
 
     @EventHandler
