@@ -24,7 +24,7 @@ import java.text.NumberFormat;
  * Created by toonsev on 2/25/2017.
  */
 public class MonitorManager {
-    public void MonitorManager(){
+    public MonitorManager(){
         new Lag().runTaskTimer(Main.getInstance(), 20, 1);
 
         new Thread(() -> {
