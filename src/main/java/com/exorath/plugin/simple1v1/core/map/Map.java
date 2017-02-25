@@ -31,6 +31,7 @@ public class Map {
     private FileConfiguration configuration;
 
     public Map(String mapName){
+        this.mapName = mapName;
         File worldDir = new File(Bukkit.getWorldContainer(), mapName);
         if(!worldDir.isDirectory()){
             System.out.println("1V1PLUGIN ERROR: Tried to initialize world '" + mapName + "' which does not exist.");
