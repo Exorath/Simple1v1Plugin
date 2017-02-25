@@ -19,6 +19,7 @@ package com.exorath.plugin.simple1v1.core;
 import com.exorath.plugin.simple1v1.core.baseplugin.BasePluginManager;
 import com.exorath.plugin.simple1v1.core.map.MapManager;
 import com.exorath.plugin.simple1v1.core.message.MessageManager;
+import com.exorath.plugin.simple1v1.core.monitor.MonitorManager;
 import com.exorath.plugin.simple1v1.core.protection.ProtectionManager;
 import com.exorath.plugin.simple1v1.core.start.StartManager;
 import com.exorath.plugin.simple1v1.core.state.StateManager;
@@ -53,6 +54,7 @@ public class Main extends JavaPlugin {
             addManager(new TerminationManager());
             addManager(new BasePluginManager());
             addManager(new VisibilityManager());
+            addManager(new MonitorManager());
         } catch (Exception e) {
             e.printStackTrace();
             terminate();
