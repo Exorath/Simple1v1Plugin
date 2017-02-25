@@ -24,7 +24,9 @@ import com.exorath.plugin.simple1v1.core.start.StartManager;
 import com.exorath.plugin.simple1v1.core.state.StateManager;
 import com.exorath.plugin.simple1v1.core.teleport.TeleportManager;
 import com.exorath.plugin.simple1v1.core.termination.TerminationManager;
+import com.exorath.plugin.simple1v1.core.visibility.VisibilityManager;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -50,6 +52,7 @@ public class Main extends JavaPlugin {
             addManager(new TeleportManager());
             addManager(new TerminationManager());
             addManager(new BasePluginManager());
+            addManager(new VisibilityManager());
         } catch (Exception e) {
             e.printStackTrace();
             terminate();
@@ -82,6 +85,14 @@ public class Main extends JavaPlugin {
         return getManager(MapManager.class);
     }
 
+    public static void refreshVisibility(Player player){
+        for(Player viewer : Bukkit.getOnlinePlayers()){
+            if(player.equals(viewer))
+                continue;
+            viewer.hidePlayer(player);
+            viewer.showPlayer(player);
+        }
+    }
     public static Main getInstance() {
         return instance;
     }
