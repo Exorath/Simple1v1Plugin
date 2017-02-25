@@ -20,11 +20,13 @@ import com.exorath.plugin.simple1v1.core.state.State;
 import com.exorath.plugin.simple1v1.core.state.StateChangeEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 
 /**
  * Created by toonsev on 2/8/2017.
  */
-public class MessageManager {
+public class MessageManager implements Listener {
     @EventHandler
     public void onStateChange(StateChangeEvent event){
         if(event.getNewState() == State.STARTED){
@@ -36,5 +38,10 @@ public class MessageManager {
         }else if(event.getNewState() == State.STOPPING){
             Bukkit.getOnlinePlayers().forEach(p -> p.sendMessage("Server is stopping."));
         }
+    }
+
+    @EventHandler
+    public void onJoin(PlayerJoinEvent event){
+        event.getPlayer().sendMessage("Welcome, simple1v1 running.");
     }
 }

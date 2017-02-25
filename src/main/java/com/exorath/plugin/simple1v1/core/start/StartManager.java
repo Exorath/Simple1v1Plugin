@@ -63,6 +63,8 @@ public class StartManager implements Listener {
             }
         } else if (Main.getStateManager().getState().equals(State.COUNTING_DOWN)) {
             Main.getStateManager().setState(State.WAITING_FOR_PLAYERS);
+        }else {
+            Bukkit.broadcastMessage("Waiting for " + (2 - Bukkit.getOnlinePlayers().size()) + " more players...");
         }
     }
 

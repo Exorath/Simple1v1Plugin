@@ -23,6 +23,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.util.List;
@@ -30,7 +31,7 @@ import java.util.List;
 /**
  * Created by toonsev on 2/8/2017.
  */
-public class TeleportManager {
+public class TeleportManager implements Listener {
     public TeleportManager() {
 
     }
