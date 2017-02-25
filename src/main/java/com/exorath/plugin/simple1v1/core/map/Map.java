@@ -18,6 +18,7 @@ package com.exorath.plugin.simple1v1.core.map;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.WorldCreator;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -28,6 +29,7 @@ import java.io.File;
  */
 public class Map {
     private String mapName;
+    private World world;
     private FileConfiguration configuration;
 
     public Map(String mapName){
@@ -40,6 +42,7 @@ public class Map {
         File configFile = new File(worldDir, "exorath.yml");
         if(configFile.isFile())
             configuration = YamlConfiguration.loadConfiguration(configFile);
+        world = WorldCreator.name(mapName).createWorld();
     }
 
     public String getMapName() {
@@ -51,6 +54,6 @@ public class Map {
     }
 
     public World getWorld(){
-        return Bukkit.getWorld(mapName);
+        return world;
     }
 }
